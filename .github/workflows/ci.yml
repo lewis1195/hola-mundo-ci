@@ -1,0 +1,27 @@
+# .github/workflows/ci.yml
+name: CI Pipeline # Nombre del workflow (puedes cambiarlo si lo deseas)
+
+on: 
+  push: 
+    branches:
+      - main    # Ejecutar el workflow en cada push a la rama main
+      - dev     # Ejecutar el workflow en cada push a la rama dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Usar un entorno de Ubuntu para ejecutar el trabajo
+
+    steps:
+    - name: Checkout the repository code
+      uses: actions/checkout@v3  # Utiliza una acción oficial de GitHub para obtener el código del repositorio
+
+    - name: Set up Node.js environment
+      uses: actions/setup-node@v3  # Configura Node.js en el entorno
+      with:
+        node-version: '16'         # Especifica la versión de Node.js a usar (puedes cambiarla si necesitas otra)
+
+    - name: Install dependencies
+      run: npm install             # Instala todas las dependencias listadas en package.json
+
+    - name: Run unit tests
+      run: npm test                # Ejecuta el comando de prueba unitaria, definido en tu package.json
